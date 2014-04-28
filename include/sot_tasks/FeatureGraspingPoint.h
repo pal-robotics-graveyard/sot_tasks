@@ -14,12 +14,14 @@ class FeatureGraspingPoint : public FeatureVisualPoint
 	
 	void closeHand();
 	void openHand();
+    void enableAutomaticClosing(const bool& enable);
 
 	ml::Matrix& computeJacobian( ml::Matrix& J,int time );
 
 	private:
 	const float distance_threshold_;
 	bool is_closed_;
+    bool auto_closing_;
 
     ros::NodeHandle nh_;
 	actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> ac_;
