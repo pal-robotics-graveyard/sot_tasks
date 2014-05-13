@@ -18,6 +18,10 @@ find_package(catkin REQUIRED COMPONENTS
   sot-dyninv
   sot_cmake
   tf2
+  actionlib
+  geometry_msgs
+  roscpp
+  control_msgs
 )
 
 ## Uncomment this if the package has a setup.py. This macro ensures
