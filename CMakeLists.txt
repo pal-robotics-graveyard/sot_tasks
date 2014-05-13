@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sot_tasks)
 
 # suppress gcc warnings
-string(REPLACE "-Werror=conversion-null" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-string(REPLACE "-Wconversion-null" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+string(REPLACE "-Werror=conversion-null" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+string(REPLACE "-Wconversion-null" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)

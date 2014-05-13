@@ -4,10 +4,10 @@ from dynamic_graph.sot.core.meta_tasks_kine import *
 from dynamic_graph.sot.core.meta_task_posture import MetaTaskKinePosture
 from dynamic_graph.sot.core.meta_task_visual_point import MetaTaskVisualPoint
 
-
 from .meta_task_grasping_point import MetaTaskGraspingPoint
 from .meta_task_velocity_damping import MetaTaskVelocityDamping
 from .meta_task_joint_weights import MetaTaskJointWeights
+from .meta_task_kine_ineq import MetaTaskIneqKine6d
 from dynamic_graph.sot_tasks.task_joint_limit_clamping import TaskJointLimitClamping
 
 from dynamic_graph.sot.core.meta_task_dyn_oppoint_modifier import MetaTaskDynamicOppoint
@@ -19,16 +19,6 @@ from sot_ros_api.utilities.sot import pop, push
 
 import numpy
 import time
-
-class MetaTaskIneqKine6d(MetaTaskKine6d):
-    def createTask(self):
-        self.task = TaskInequality('inequalitytask'+self.name)
-        
-    def createFeatures(self):
-        self.feature    = FeaturePoint6d('ineqfeature'+self.name)
-        self.featureDes = FeaturePoint6d('ineqfeature'+self.name+'_ref')
-        self.feature.selec.value = '111111'
-        self.feature.frame('current')
 
 def createJointLimitsTask(gain = 1, dt = None):
     robot.dynamic.upperJl.recompute(0)
@@ -96,18 +86,6 @@ def createInequalityTask(taskName, jointName, selectionMask='000111', positionVe
 def createVelocityDampingTask(taskName, jointName, collisionCenter, di, ds):
     taskVelDamp = MetaTaskVelocityDamping(taskName, robot.dynamic, jointName, jointName, collisionCenter, di, ds)
     return taskVelDamp
-#     taskVelDamp = TaskVelocityDamping(taskName)
-#     taskVelDamp.di.value = 0.2
-#     taskVelDamp.ds.value = 0.1
-#     taskVelDamp.dt.value = 0.001
-#     taskVelDamp.controlGain.value = 1
-#     
-#     taskVelDamp.p2.value = matrixToTuple(goalP2)
-#     robot.dynamic.Jarm_right_tool_joint.recompute(0)
-#     robot.dynamic.arm_right_tool_joint.recompute(0)
-#     plug(robot.dynamic.signal("arm_right_tool_joint"), taskVelDamp.p1)
-#     plug(robot.dynamic.signal("Jarm_right_tool_joint"), taskVelDamp.jVel)
-
 
 def createWeightsTask(diag = None, gain = 0.001, sampleInterval = 0, selec = toFlags(range(0,robot.dimension))):
     taskWeights = MetaTaskJointWeights('jointWeights',selec,robot,diag,gain,sampleInterval)
@@ -138,9 +116,8 @@ def zeroPosition():
     plug(robot.dynamic.position,taskZeroPosition.task.position)
     return taskZeroPosition
 
-def safePosition():
+def safePosition(gain=0.01):
     diag = None
-    gain = 0.01
     safePos = numpy.zeros(robot.dimension)
     safePos[9] = 0.2
     safePos[16] = 0.2
@@ -202,16 +179,16 @@ def gotoNdComp(task,position,selec=None,gain=None,resetJacobian=True,comp=[[0,1,
     if 'resetJacobianDerivative' in task.task.__class__.__dict__.keys() and resetJacobian:
         task.task.resetJacobianDerivative()
 
-def gotoSafePos():
+def gotoSafePos(duration=5, gain=0.01):
     '''
     Go to the safe position
     In this position the hands are away from the base
     Wait some time to reach the position
     '''
     solver.clear()
-    safePos = safePosition()
+    safePos = safePosition(gain)
     push(safePos)
-    time.sleep(5)
+    time.sleep(duration)
     pop(safePos)
 
 def gotoZeroPos():
