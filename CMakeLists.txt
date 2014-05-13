@@ -5,6 +5,7 @@ project(sot_tasks)
 string(REPLACE "-Werror=conversion-null" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 string(REPLACE "-Wconversion-null" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -40,6 +41,8 @@ catkin_package(
   LIBRARIES task_velocity_damping task_joint_limit_clamping task_joint_weights
   CATKIN_DEPENDS dynamic-graph dynamic-graph-python jrl-mal jrl-mathtools roscpp sot-core sot-dyninv sot_cmake tf2
 )
+
+message("PYYYYYYYTHOOOOOOOOOOOON:   ${CATKIN_PACKAGE_PYTHON_DESTINATION}")
 
 ###########
 ## Build ##
@@ -90,10 +93,10 @@ add_subdirectory(src)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(FILES
+  config/self_collision_full.yaml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+)
 
 ## Mark executables and/or libraries for installation
 install(TARGETS feature_grasping_point task_velocity_damping task_joint_weights task_joint_limit_clamping

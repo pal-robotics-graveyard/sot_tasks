@@ -161,6 +161,7 @@ def createComIneqTask(gain = 1, dt = 0.001, referenceInf = (-1,-1, 0), reference
     taskCom.controlGain.value = gain
     return taskCom
 
+
 def gotoNdComp(task,position,selec=None,gain=None,resetJacobian=True,comp=[[0,1,0],[0,0,1],[1,0,0]]):
     '''
     gotoNdComp takes care of the different frame orientations used in jrl-dynamics. 

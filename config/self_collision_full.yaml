@@ -1,0 +1,103 @@
+---   #http://en.wikipedia.org/wiki/YAML
+robot: reemh
+
+collision_objects:
+ - arm_right_7_joint
+ - arm_right_5_joint
+ - arm_right_3_joint
+ - arm_left_7_joint
+ - arm_left_5_joint
+ - arm_left_3_joint
+ - torso_1_joint
+ - torso_2_joint
+ - head_1_joint
+
+collision_pairs:
+ #****************************************************
+ # left arm...
+ #****************************************************
+ # ...left arm against right arm
+ - {link1: arm_left_7_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_7_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_7_joint, link2: arm_right_3_joint, ds: 0.03, di: 0.1}
+ 
+ - {link1: arm_left_5_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_5_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_5_joint, link2: arm_right_3_joint, ds: 0.03, di: 0.1}
+
+ - {link1: arm_left_3_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_3_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_3_joint, link2: arm_right_3_joint, ds: 0.03, di: 0.1}
+
+ # ...left arm against head1
+ - {link1: arm_left_7_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_5_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_left_3_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+
+ # ...left arm against torso1
+ - {link1: arm_left_7_joint, link2: torso_1_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_left_5_joint, link2: torso_1_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_left_3_joint, link2: torso_1_joint, ds: 0.03, di: 0.1}
+
+ # ...left arm against torso2
+ - {link1: arm_left_7_joint, link2: torso_2_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_left_5_joint, link2: torso_2_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_left_3_joint, link2: torso_2_joint, ds: 0.03, di: 0.1}
+
+
+ #****************************************************
+ # right arm...
+ #****************************************************
+ # ...against left arm
+ - {link1: arm_right_7_joint, link2: arm_left_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_7_joint, link2: arm_left_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_7_joint, link2: arm_left_3_joint, ds: 0.03, di: 0.1}
+ 
+ - {link1: arm_right_5_joint, link2: arm_left_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_5_joint, link2: arm_left_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_5_joint, link2: arm_left_3_joint, ds: 0.03, di: 0.1}
+
+ - {link1: arm_right_3_joint, link2: arm_left_7_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_3_joint, link2: arm_left_5_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_3_joint, link2: arm_left_3_joint, ds: 0.03, di: 0.1}
+
+ # ...right arm against head1
+ - {link1: arm_right_7_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_5_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+ - {link1: arm_right_3_joint, link2: head_1_joint, ds: 0.03, di: 0.1}
+
+ # ...right arm against torso1
+ - {link1: arm_right_7_joint, link2: torso_1_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_right_5_joint, link2: torso_1_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_right_3_joint, link2: torso_1_joint, ds: 0.03, di: 0.1}
+
+ # ...right arm against torso2
+ - {link1: arm_right_7_joint, link2: torso_2_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_right_5_joint, link2: torso_2_joint, ds: 0.05, di: 0.1}
+ - {link1: arm_right_3_joint, link2: torso_2_joint, ds: 0.03, di: 0.1}
+
+ #****************************************************
+ # torso/head inverse...
+ #****************************************************
+ # ...against left arm
+ #- {link1: torso_1_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ #- {link1: torso_1_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ #- {link1: torso_1_joint, link2: arm_right_3_joint, ds: 0.03, di: 0.1}
+ #- {link1: torso_1_joint, link2: arm_left_7_joint, ds: 0.07, di: 0.1}
+ #- {link1: torso_1_joint, link2: arm_left_5_joint, ds: 0.07, di: 0.1}
+ #- {link1: torso_1_joint, link2: arm_right_5_joint, ds: 0.07, di: 0.1}
+
+ #- {link1: torso_2_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ #- {link1: torso_2_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ #- {link1: torso_2_joint, link2: arm_left_7_joint, ds: 0.07, di: 0.1}
+ #- {link1: torso_2_joint, link2: arm_left_5_joint, ds: 0.07, di: 0.1}
+
+ #- {link1: head_1_joint, link2: arm_right_7_joint, ds: 0.03, di: 0.1}
+ #- {link1: head_1_joint, link2: arm_right_5_joint, ds: 0.03, di: 0.1}
+ #- {link1: head_1_joint, link2: arm_left_7_joint, ds: 0.07, di: 0.1}
+ #- {link1: head_1_joint, link2: arm_left_5_joint, ds: 0.07, di: 0.1}
+
+
+
+
+
