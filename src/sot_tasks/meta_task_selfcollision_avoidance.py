@@ -108,4 +108,7 @@ for idx in range(len(collision_pairs)):
 def getSelfCollisionTask():
     return taskDAMP
 
-__all__ = ['getSelfCollisionTask']
+def getEntFCL():
+    return entFCL
+
+__all__ = ['getSelfCollisionTask', 'getEntFCL']
