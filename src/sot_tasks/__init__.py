@@ -186,7 +186,7 @@ def gotoSafePos(duration=5, gain=0.01):
     In this position the hands are away from the base
     Wait some time to reach the position
     '''
-    solver.clear()
+    #solver.clear()
     safePos = safePosition(gain)
     push(safePos)
     time.sleep(duration)
