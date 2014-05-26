@@ -14,7 +14,7 @@ DYNAMICGRAPH_FACTORY_ENTITY_PLUGIN(FeatureGraspingPoint,"FeatureGraspingPoint");
 
 FeatureGraspingPoint::FeatureGraspingPoint(const string& pointName) 
     : FeatureVisualPoint( pointName),
-      distance_threshold_(0.01f),
+      distance_threshold_(0.05f),
       is_closed_(true),
       auto_closing_(true),
       nh_(),
@@ -133,6 +133,36 @@ void FeatureGraspingPoint::enableAutomaticClosing(const bool& enable)
     auto_closing_ = enable;
 }
 
+ml::Vector&
+FeatureGraspingPoint::computeError( ml::Vector& error,int time )
+{
+  const Flags &fl = selectionSIN(time);
+  error.resize(dimensionSOUT(time)) ;
+  unsigned int cursorL = 0;
+
+  // distance in z to a specific point in 3D
+  const double & Z = ZSIN(time);
+  // xy point in 2D
+  const double & x = xySIN(time)(0);
+  const double & y = xySIN(time)(1);
+
+  float d = sqrt(x*x+y*y+Z*Z);
+  if (d < 0.1f){
+      error.setZero();
+      return error;
+  }
+
+  if(! isReferenceSet() )
+    { throw(ExceptionFeature(ExceptionFeature::BAD_INIT,
+                 "S* is not of adequate type.")); }
+
+  if( fl(0) )
+    { error( cursorL++ ) = x - getReference()->xySIN(time)(0) ;   }
+  if( fl(1) )
+    { error( cursorL++ ) = y - getReference()->xySIN(time)(1) ;   }
+
+  return error ;
+}
 
 ml::Matrix& FeatureGraspingPoint::
 computeJacobian( ml::Matrix& J,int time )
@@ -149,13 +179,24 @@ computeJacobian( ml::Matrix& J,int time )
     const double & x = xySIN(time)(0);
     const double & y = xySIN(time)(1);
 
-    if( Z<0 )
-    { throw(ExceptionFeature(ExceptionFeature::BAD_INIT,
-                             "Negative Z value in Feature-Grasping is not allowed"," (Z=%.1f).",Z)); }
+    std::cerr << "Z " << Z << std::endl;
+    std::cerr << "x " << x << std::endl;
+    std::cerr << "y " << y << std::endl;
 
-    if( fabs(Z)<distance_threshold_ && auto_closing_)
+    if( Z<0 )
     {
-        closeHand();
+        std::cerr << "unable to look at ball" << std::endl;
+        L.multiply(articularJacobianSIN(time),J);
+        return J;
+    }
+
+    float d = sqrt(x*x+y*y+Z*Z);
+    if (d < 0.1f){
+        if( fabs(d)<distance_threshold_ && auto_closing_)
+        {
+            closeHand();
+        }
+            return J;
     }
 
     if( fl(0) )

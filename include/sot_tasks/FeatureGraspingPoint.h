@@ -17,6 +17,7 @@ class FeatureGraspingPoint : public FeatureVisualPoint
     void enableAutomaticClosing(const bool& enable);
 
 	ml::Matrix& computeJacobian( ml::Matrix& J,int time );
+    ml::Vector& computeError( ml::Vector& error,int time );
 
 	private:
 	const float distance_threshold_;

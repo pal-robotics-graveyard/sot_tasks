@@ -8,7 +8,7 @@ class MetaTaskGraspingPoint(MetaTaskVisualPoint):
 
     def createFeatures(self):
         self.feature    = FeatureGraspingPoint('feature'+self.name)
-        self.featureDes = FeatureVisualPoint('feature'+self.name+'_ref')
+        self.featureDes = FeatureGraspingPoint('feature'+self.name+'_ref')
         self.feature.selec.value = '11'
 
     def __init__(self,name,dyn,opPoint,opPointRef='right-wrist'):
