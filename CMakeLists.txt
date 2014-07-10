@@ -42,8 +42,6 @@ catkin_package(
   CATKIN_DEPENDS dynamic-graph dynamic-graph-python jrl-mal jrl-mathtools roscpp sot-core sot-dyninv sot_cmake tf2
 )
 
-message("PYYYYYYYTHOOOOOOOOOOOON:   ${CATKIN_PACKAGE_PYTHON_DESTINATION}")
-
 ###########
 ## Build ##
 ###########
